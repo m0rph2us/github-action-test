@@ -1,7 +1,4 @@
-# This workflow will build a Java project with Gradle
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
-
-name: Java CI with Gradle
+name: Test
 
 on:
   push:
@@ -18,22 +15,22 @@ jobs:
     - uses: actions/checkout@v2
       with:
         path: self
-    - name: Checkout Docker MySQL Repository
+    - name: Checkout docker environment repository
       uses: actions/checkout@v2
       with:
         repository: 'm0rph2us/docker-mysql'
         path: 'docker-mysql'
-    - name: Checkout Proper Docker MySQL Branch For Push Event
+    - name: Checkout proper branch for push event
       if: ${{ github.event_name == 'push' }}
       run: echo $GITHUB_REF && git checkout ${GITHUB_HEAD_REF##*/}
       working-directory: 'docker-mysql'
       continue-on-error: true
-    - name: Checkout Proper Docker MySQL Branch For PR Event
+    - name: Checkout proper branch for PR event
       if: ${{ github.event_name == 'pull_request' }}
       run: echo $GITHUB_HEAD_REF && git checkout $(echo $GITHUB_HEAD_REF | cut -d'/' -f1)/${GITHUB_HEAD_REF##*/}
       working-directory: 'docker-mysql'
       continue-on-error: true
-    - name: Run MySQL Container
+    - name: Run MySQL container
       run: docker-compose up -d
       working-directory: 'docker-mysql'
     - name: Set up JDK 1.8
@@ -43,6 +40,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       working-directory: self
-    - name: Build with Gradle
-      run: ./gradlew build
+    - name: Test with Gradle
+      run: ./gradlew :test
       working-directory: self
