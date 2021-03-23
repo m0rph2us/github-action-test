@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        path: self
     - name: Checkout Docker MySQL Repository
       uses: actions/checkout@v2
       with:
