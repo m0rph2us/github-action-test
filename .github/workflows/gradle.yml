@@ -24,7 +24,7 @@ jobs:
         repository: 'm0rph2us/docker-mysql'
         path: 'docker-mysql'
     - name: Checkout Proper Docker MySQL Branch
-      run: git checkout $(echo $GITHUB_REF | cut -d'/' -f1)/${GITHUB_REF##*/}
+      run: echo $GITHUB_REF && git checkout $(echo $GITHUB_REF | cut -d'/' -f1)/${GITHUB_REF##*/}
       working-directory: 'docker-mysql'
       continue-on-error: true
     - name: Set up JDK 1.8
