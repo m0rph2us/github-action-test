@@ -30,6 +30,8 @@ jobs:
     - name: Run MySQL Container
       run: docker-compose up -d
       working-directory: 'docker-mysql'
+    - name: Say Hello
+      run: echo 'Hello'
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
