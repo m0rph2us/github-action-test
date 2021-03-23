@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  test-with-gradle:
 
     runs-on: ubuntu-latest
 
