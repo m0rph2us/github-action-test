@@ -1,4 +1,4 @@
-name: Run gradle test
+name: Test with Gradle
 
 on:
   push:
