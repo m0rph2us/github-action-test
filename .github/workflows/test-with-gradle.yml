@@ -24,12 +24,10 @@ jobs:
       if: ${{ github.event_name == 'push' }}
       run: echo $GITHUB_REF && git checkout ${GITHUB_REF##*/}
       working-directory: 'docker-mysql'
-      continue-on-error: true
     - name: Checkout proper branch for PR event
       if: ${{ github.event_name == 'pull_request' }}
-      run: echo $GITHUB_HEAD_REF && git checkout $(echo $GITHUB_HEAD_REF | cut -d'/' -f1)/${GITHUB_HEAD_REF##*/}
+      run: echo $GITHUB_HEAD_REF && git checkout $(echo $GITHUB_HEAD_REF | cut -d'/' -f1)/${GITHUB_HEAD_REF##*/} && git merge ${GITHUB_REF##*/}
       working-directory: 'docker-mysql'
-      continue-on-error: true
     - name: Run MySQL container
       run: docker-compose up -d
       working-directory: 'docker-mysql'
