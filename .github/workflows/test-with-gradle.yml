@@ -27,7 +27,7 @@ jobs:
     - name: Checkout proper branch for PR event
       if: ${{ github.event_name == 'pull_request' }}
       run: |
-        if [[ ${GITHUB_BASE_REF##*/} != docker-* ]]; then exit 0; fi;
+        if [[ ${GITHUB_HEAD_REF##*/} != docker-* ]]; then exit 0; fi;
         echo ${GITHUB_HEAD_REF##*/:7} && echo ${GITHUB_BASE_REF##*/} 
         git fetch 
         git branch -a 
@@ -39,7 +39,7 @@ jobs:
       working-directory: 'docker-mysql'
     - name: Run MySQL container
       run: |
-        if [[ ${GITHUB_BASE_REF##*/} != docker-* ]]; then exit 0; fi;
+        if [[ ${GITHUB_HEAD_REF##*/} != docker-* ]]; then exit 0; fi;
         docker-compose up -d
       working-directory: 'docker-mysql'
     - name: Set up JDK 1.8
