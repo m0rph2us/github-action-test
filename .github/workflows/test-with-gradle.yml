@@ -57,10 +57,6 @@ jobs:
       working-directory: 'docker-mysql'
     - name: Run MySQL container
       run: |
-        echo ${GITHUB_HEAD_REF}
-        echo ${GITHUB_BASE_REF}
-        echo ${GITHUB_REF}
-        if [[ ${GITHUB_HEAD_REF##*/} != docker-* ]]; then exit 0; fi;
         docker-compose up -d
       working-directory: 'docker-mysql'
     - name: Set up JDK 1.8
