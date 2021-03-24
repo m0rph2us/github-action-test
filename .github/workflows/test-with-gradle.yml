@@ -29,8 +29,8 @@ jobs:
       run: |
         if [[ ${GITHUB_HEAD_REF##*/} != docker-* ]]; then exit 0; fi;
         echo ${GITHUB_HEAD_REF##*/} && echo ${GITHUB_BASE_REF##*/} 
-        export DOCKER_BRANCH_NAME=$(echo ${GITHUB_HEAD_REF##*/} | cut -c 8-)
-        export DOCKER_BRANCH=$(echo $GITHUB_HEAD_REF | cut -d'/' -f1)/$DOCKER_BRANCH_NAME
+        DOCKER_BRANCH_NAME=$(echo ${GITHUB_HEAD_REF##*/} | cut -c 8-)
+        DOCKER_BRANCH=$(echo $GITHUB_HEAD_REF | cut -d'/' -f1)/$DOCKER_BRANCH_NAME
         if [[ $DOCKER_BRANCH_NAME =~ develop|stage|main|master ]];
         then
           git checkout $DOCKER_BRANCH_NAME;
