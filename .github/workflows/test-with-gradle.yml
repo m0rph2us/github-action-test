@@ -12,6 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set default branch name
+      run: git config --global init.defaultBranch=main
+    - name: Set timezone
+      run: export TZ="Asia/Seoul"
     - uses: actions/checkout@v2
       with:
         path: self
