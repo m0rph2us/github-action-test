@@ -27,14 +27,15 @@ jobs:
     - name: Checkout proper branch for PR event
       if: ${{ github.event_name == 'pull_request' }}
       run: |
-        echo $GITHUB_HEAD_REF && echo ${GITHUB_BASE_REF##*/} 
+        if [[ ${GITHUB_BASE_REF##*/} != docker-* ]]; then exit 0; fi;
+        echo ${GITHUB_HEAD_REF##*/:7} && echo ${GITHUB_BASE_REF##*/} 
         git fetch 
         git branch -a 
-        git checkout $(echo $GITHUB_HEAD_REF | cut -d'/' -f1)/${GITHUB_HEAD_REF##*/} 
+        git checkout $(echo $GITHUB_HEAD_REF | cut -d'/' -f1)/${GITHUB_HEAD_REF##*/:7} 
         if [[ ${GITHUB_BASE_REF##*/} = 'main' ]]; 
         then git merge main || git merge master; 
         else git merge ${GITHUB_BASE_REF##*/}; 
-        fi
+        fi;
       working-directory: 'docker-mysql'
     - name: Run MySQL container
       run: docker-compose up -d
