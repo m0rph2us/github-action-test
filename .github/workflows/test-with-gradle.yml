@@ -31,7 +31,10 @@ jobs:
         git fetch 
         git branch -a 
         git checkout $(echo $GITHUB_HEAD_REF | cut -d'/' -f1)/${GITHUB_HEAD_REF##*/} 
-        [[ ${GITHUB_BASE_REF##*/} = 'main' ]] && $(git merge main || git merge master) || git merge ${GITHUB_BASE_REF##*/}
+        if [[ ${GITHUB_BASE_REF##*/} = 'main' ]]; 
+        then git merge main || git merge master; 
+        else git merge ${GITHUB_BASE_REF##*/}; 
+        fi
       working-directory: 'docker-mysql'
     - name: Run MySQL container
       run: docker-compose up -d
