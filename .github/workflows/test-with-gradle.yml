@@ -22,7 +22,10 @@ jobs:
         path: 'docker-mysql'
     - name: Checkout proper branch for push event
       if: ${{ github.event_name == 'push' }}
-      run: echo $GITHUB_REF && git checkout ${GITHUB_REF##*/}
+      run: |
+        echo $GITHUB_REF
+        git branch -a
+        git checkout ${GITHUB_REF##*/}
       working-directory: 'docker-mysql'
     - name: Checkout proper branch for PR event
       if: ${{ github.event_name == 'pull_request' }}
